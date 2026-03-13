@@ -14,7 +14,7 @@ Application Symfony 6.4 - Blog technologique avec articles, catégories et comme
 1. **Cloner le projet**
    ```bash
    git clone https://github.com/angoularaphael/travail-symfony
-   cd tech_blog
+   cd travail-symfony
    ```
 
 2. **Installer les dépendances**
