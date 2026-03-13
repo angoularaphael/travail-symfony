@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }} - Tech Blog{% endblock %}
+
+{% block body %}
+    <article>
+        <h1>{{ post.title }}</h1>
+
+        {% if post.categories|length > 0 %}
+            <div class="categories">
+                {% for category in post.categories %}
+                    <span class="badge">{{ category.name }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="post-content">
+            {{ post.content|nl2br }}
+        </div>
+    </article>
+
+    <section class="comments">
+        <h2>Commentaires</h2>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn">Publier le commentaire</button>
+        {{ form_end(form) }}
+
+        <div class="comments-list">
+            {% for comment in post.comments %}
+                <div class="comment">
+                    <strong>{{ comment.username }}</strong>
+                    <span class="comment-date">{{ comment.createdAt|date('d/m/Y H:i') }}</span>
+                    <p>{{ comment.content|nl2br }}</p>
+                </div>
+            {% else %}
+                <p>Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <p><a href="{{ path('app_home') }}">← Retour à l'accueil</a></p>
+{% endblock %}
