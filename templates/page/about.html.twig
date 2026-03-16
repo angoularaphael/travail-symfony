@@ -2,8 +2,15 @@
 
 {% block title %}À propos - Tech Blog{% endblock %}
 
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>À propos</span>
+{% endblock %}
+
 {% block body %}
-    <h1>À propos de Tech Blog</h1>
-    <p>Tech Blog est un blog dédié à l'actualité technologique, au développement logiciel et à l'administration système.</p>
-    <p>Notre mission est de partager des connaissances et des tutoriels pour les passionnés de technologie.</p>
+    <article class="post-detail">
+        <h1 class="hero-title">À propos de Tech Blog</h1>
+        <p class="lead">Tech Blog est un blog dédié à l'actualité technologique, au développement logiciel et à l'administration système.</p>
+        <p>Notre mission est de partager des connaissances et des tutoriels pour les passionnés de technologie.</p>
+    </article>
 {% endblock %}

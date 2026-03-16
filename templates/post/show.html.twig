@@ -2,14 +2,19 @@
 
 {% block title %}{{ post.title }} - Tech Blog{% endblock %}
 
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>{{ post.title }}</span>
+{% endblock %}
+
 {% block body %}
-    <article>
-        <h1>{{ post.title }}</h1>
+    <article class="post-detail">
+        <h1 class="post-title">{{ post.title }}</h1>
 
         {% if post.categories|length > 0 %}
             <div class="categories">
                 {% for category in post.categories %}
-                    <span class="badge">{{ category.name }}</span>
+                    <a href="{{ path('app_category_show', {id: category.id}) }}" class="badge">{{ category.name }}</a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -40,10 +45,10 @@
                     <p>{{ comment.content|nl2br }}</p>
                 </div>
             {% else %}
-                <p>Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
+                <p class="empty-state">Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
             {% endfor %}
         </div>
     </section>
 
-    <p><a href="{{ path('app_home') }}">← Retour à l'accueil</a></p>
+    <a href="{{ path('app_home') }}" class="back-link">← Retour à l'accueil</a>
 {% endblock %}

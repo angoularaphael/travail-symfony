@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>Catégories</span>
+{% endblock %}
+
+{% block body %}
+    <h1 class="hero-title">Catégories</h1>
+    <p class="lead">Parcourez nos articles par catégorie.</p>
+
+    <section class="category-grid">
+        {% for category in categories %}
+            <a href="{{ path('app_category_show', {id: category.id}) }}" class="category-card">
+                <h2>{{ category.name }}</h2>
+                <span class="category-count">{{ category.posts|length }} article(s)</span>
+            </a>
+        {% else %}
+            <p class="empty-state">Aucune catégorie pour le moment.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

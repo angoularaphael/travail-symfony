@@ -15,6 +15,18 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PostController extends AbstractController
 {
+    #[Route('/search', name: 'app_search', methods: ['GET'])]
+    public function search(Request $request, PostRepository $postRepository): Response
+    {
+        $query = trim((string) $request->query->get('q', ''));
+        $posts = $query !== '' ? $postRepository->search($query) : [];
+
+        return $this->render('post/search.html.twig', [
+            'posts' => $posts,
+            'query' => $query,
+        ]);
+    }
+
     #[Route('/post/{id}', name: 'app_post_show', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function show(int $id, PostRepository $postRepository, Request $request, EntityManagerInterface $entityManager): Response
     {

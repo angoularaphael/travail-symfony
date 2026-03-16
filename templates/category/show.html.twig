@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <a href="{{ path('app_categories') }}">Catégories</a>
+    <span class="sep">›</span>
+    <span>{{ category.name }}</span>
+{% endblock %}
+
+{% block body %}
+    <h1 class="hero-title">{{ category.name }}</h1>
+    <p class="lead">{{ category.posts|length }} article(s) dans cette catégorie.</p>
+
+    <section class="posts">
+        {% for post in category.posts %}
+            <article class="post-card">
+                <h2>
+                    <a href="{{ path('app_post_show', {id: post.id}) }}">{{ post.title }}</a>
+                </h2>
+                <p>{{ post.content|length > 200 ? (post.content|slice(0, 200) ~ '...') : post.content }}</p>
+                <div class="categories">
+                    {% for cat in post.categories %}
+                        <a href="{{ path('app_category_show', {id: cat.id}) }}" class="badge">{{ cat.name }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+        {% else %}
+            <p class="empty-state">Aucun article dans cette catégorie.</p>
+        {% endfor %}
+    </section>
+
+    <a href="{{ path('app_categories') }}" class="back-link">← Toutes les catégories</a>
+{% endblock %}
