@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes articles - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>Mes articles</span>
+{% endblock %}
+
+{% block body %}
+    <h1 class="hero-title">Mes articles</h1>
+    <p class="lead">Voici les articles que vous avez rédigés.</p>
+
+    <p style="margin-bottom: 1.5rem;">
+        <a href="{{ path('app_post_create') }}" class="btn">+ Rédiger un nouvel article</a>
+    </p>
+
+    <section class="posts">
+        {% for post in posts %}
+            <article class="post-card">
+                <h2>
+                    <a href="{{ path('app_post_show', {id: post.id}) }}">{{ post.title }}</a>
+                </h2>
+                <p>{{ post.content|length > 200 ? (post.content|slice(0, 200) ~ '...') : post.content }}</p>
+                {% if post.categories|length > 0 %}
+                    <div class="categories">
+                        {% for category in post.categories %}
+                            <a href="{{ path('app_category_show', {id: category.id}) }}" class="badge">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <a href="{{ path('app_post_show', {id: post.id}) }}" class="read-more">Lire la suite</a>
+            </article>
+        {% else %}
+            <p class="empty-state">Vous n'avez pas encore rédigé d'article. <a href="{{ path('app_post_create') }}" class="read-more">Rédiger votre premier article</a></p>
+        {% endfor %}
+    </section>
+{% endblock %}

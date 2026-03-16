@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rédiger un article - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>Rédiger un article</span>
+{% endblock %}
+
+{% block body %}
+    <article class="post-detail">
+        <h1 class="hero-title">Rédiger un article</h1>
+        <p class="lead">Partagez vos idées avec la communauté.</p>
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.content) }}
+            {{ form_row(form.categories) }}
+            <button type="submit" class="btn">Publier l'article</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_post_my') }}" class="back-link">← Retour à mes articles</a>
+    </article>
+{% endblock %}

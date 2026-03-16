@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>Inscription</span>
+{% endblock %}
+
+{% block body %}
+    <article class="post-detail">
+        <h1 class="hero-title">Inscription</h1>
+        <p class="lead">Créez un compte pour rédiger des articles sur le blog.</p>
+
+        {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.plainPassword) }}
+            <button type="submit" class="btn">S'inscrire</button>
+        {{ form_end(form) }}
+
+        <p style="margin-top: 1.5rem;">
+            Déjà un compte ? <a href="{{ path('app_login') }}" class="read-more">Se connecter</a>
+        </p>
+    </article>
+{% endblock %}

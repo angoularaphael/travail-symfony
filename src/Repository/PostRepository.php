@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,6 +37,19 @@ class PostRepository extends ServiceEntityRepository
             ->where('p.title LIKE :query OR p.content LIKE :query')
             ->setParameter('query', '%' . $query . '%')
             ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function findByAuthor(User $author): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.author = :author')
+            ->setParameter('author', $author)
+            ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult();
     }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,6 +55,42 @@ class PostController extends AbstractController
         return $this->render('post/show.html.twig', [
             'post' => $post,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/post/create', name: 'app_post_create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $post = new Post();
+        $post->setAuthor($this->getUser());
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($post);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre article a été publié avec succès.');
+
+            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/post/my', name: 'app_post_my', methods: ['GET'])]
+    public function myPosts(PostRepository $postRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $posts = $postRepository->findByAuthor($this->getUser());
+
+        return $this->render('post/my.html.twig', [
+            'posts' => $posts,
         ]);
     }
 }

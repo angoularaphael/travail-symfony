@@ -122,6 +122,10 @@
                 animation: fadeIn 1s ease 0.3s both;
             }
             [data-theme="light"] footer { background: var(--color-primary-light); }
+            .footer-links { margin-bottom: 1.5rem; }
+            .footer-nav { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 0.5rem; }
+            .footer-nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; transition: color var(--transition); }
+            .footer-nav a:hover { color: white; text-decoration: underline; }
             .footer-newsletter { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2); }
             .footer-title { font-weight: 600; margin: 0 0 0.25rem; font-size: 1rem; }
             .footer-desc { font-size: 0.9rem; margin: 0 0 1rem; opacity: 0.9; }
@@ -242,6 +246,9 @@
                 outline: none; border-color: var(--color-accent);
                 box-shadow: 0 0 0 3px var(--color-accent-glow);
             }
+            form ul { list-style: none; padding: 0; margin: 0.5rem 0; }
+            form li { margin: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; }
+            form input[type="checkbox"] { width: auto; max-width: none; }
 
             .btn {
                 background: linear-gradient(135deg, var(--color-accent), #8b5cf6);
@@ -325,6 +332,14 @@
                         <li><a href="{{ path('app_categories') }}">Catégories</a></li>
                         <li><a href="{{ path('app_about') }}">À propos</a></li>
                         <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                        {% if app.user %}
+                            <li><a href="{{ path('app_post_my') }}">Mes articles</a></li>
+                            <li><a href="{{ path('app_post_create') }}">Rédiger</a></li>
+                            <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                        {% else %}
+                            <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                            <li><a href="{{ path('app_register') }}">Inscription</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
@@ -341,6 +356,23 @@
         </main>
 
         <footer role="contentinfo">
+            <div class="footer-links">
+                <p class="footer-title">Navigation</p>
+                <nav class="footer-nav" aria-label="Liens du pied de page">
+                    <a href="{{ path('app_home') }}">Accueil</a>
+                    <a href="{{ path('app_categories') }}">Catégories</a>
+                    <a href="{{ path('app_about') }}">À propos</a>
+                    <a href="{{ path('app_contact') }}">Contact</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_post_my') }}">Mes articles</a>
+                        <a href="{{ path('app_post_create') }}">Rédiger un article</a>
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    {% endif %}
+                </nav>
+            </div>
             <div class="footer-newsletter">
                 <p class="footer-title">Restez informé</p>
                 <p class="footer-desc">Recevez les derniers articles par e-mail.</p>

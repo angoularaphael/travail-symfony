@@ -10,9 +10,22 @@
 {% block body %}
     <article class="post-detail">
         <h1 class="hero-title">Contact</h1>
-        <p class="lead">Une question, une suggestion ou un partenariat ? N'hésitez pas à nous contacter.</p>
+        <p class="lead">Une question, une suggestion ou un partenariat ? Remplissez le formulaire ci-dessous.</p>
 
-        <div class="contact-info">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.subject) }}
+            {{ form_row(form.message) }}
+            <button type="submit" class="btn">Envoyer le message</button>
+        {{ form_end(form) }}
+
+        <div class="contact-info" style="margin-top: 2rem;">
             <div class="contact-item">
                 <strong>Email</strong>
                 <p>contact@techblog.com</p>

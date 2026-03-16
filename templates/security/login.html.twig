@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Tech Blog{% endblock %}
+
+{% block breadcrumb_items %}
+    <span class="sep">›</span>
+    <span>Connexion</span>
+{% endblock %}
+
+{% block body %}
+    <article class="post-detail">
+        <h1 class="hero-title">Connexion</h1>
+        <p class="lead">Connectez-vous pour rédiger des articles et gérer vos publications.</p>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ path('app_login') }}">
+            <div>
+                <label for="inputEmail">Email</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" autocomplete="email" required autofocus>
+            </div>
+            <div>
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="_password" id="inputPassword" autocomplete="current-password" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="btn">Se connecter</button>
+        </form>
+
+        <p style="margin-top: 1.5rem;">
+            Pas encore de compte ? <a href="{{ path('app_register') }}" class="read-more">S'inscrire</a>
+        </p>
+    </article>
+{% endblock %}
